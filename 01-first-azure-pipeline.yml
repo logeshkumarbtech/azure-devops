@@ -9,18 +9,29 @@ stages:
   jobs:
   - job: FirstJob
     steps:
-    - script: echo Hello, world!
+    - script: echo Hello, build1!
   - job: SecondJob
     steps:
-    - script: echo Hello, world!  
-      
-   
+    - script: echo Hello, build2!  
 - stage: Dev
+  dependsOn: Build
+  jobs:
+  - job: ThirdJob
+    steps:
+    - script: echo Hello, dev1!
 - stage: QA
+  dependsOn: Dev
+  jobs:
+  - job: FourthJob
+    steps:
+    - script: echo Hello, qa1!
 - stage: Prod
+  dependsOn: Dev
+  jobs:
+  - job: FifthJob
+    steps:
+    - script: echo Hello, qa1!
+    - script: echo Hello, qa2!
   
 
-  - script: |
-      echo Add other tasks to build, test, and deploy your project.
-      echo See https://aka.ms/yaml
-    displayName: 'Run a multi-line script'
+ 
