@@ -10,21 +10,28 @@ stages:
   - job: FirstJob
     steps:
     - script: echo Hello, build1!
+    - script: echo $(PipeLineLevelVariable)
   - job: SecondJob
     steps:
     - script: echo Hello, build2!  
 - stage: Dev
+  variables:
+    environment: Dev
   dependsOn: Build
   jobs:
   - job: ThirdJob
     steps:
     - script: echo Hello, dev1!
+    - script: echo $(environment) 
 - stage: QA
+  variables:
+    environment: QA
   dependsOn: Dev
   jobs:
   - job: FourthJob
     steps:
     - script: echo Hello, qa1!
+    - script: echo $(environment)
 - stage: Prod
   dependsOn: Dev
   jobs:
