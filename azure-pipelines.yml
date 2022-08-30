@@ -1,37 +1,40 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - main
 
 pool:
   vmImage: ubuntu-latest
 
-jobs:
-- job: Job1
-  steps:
-  - script: echo Hello, sakthi!
-    displayName: 'Run a one-line script'
-  - script: |
-      echo Add other tasks to build, test, and deploy your project.
-      echo See https://aka.ms/yaml
-    displayName: 'Run a multi-line script'
-- job: Job2
-  dependsOn: Job1
-  steps:
-  - script: echo Hello, sakthi!
-- job: Job3
-  dependsOn: Job1
-  steps:
-  - script: echo Hello, sakthi!
-- job: Job4
-  dependsOn: 
-  - Job2
-  - Job3 
-  steps:
-  - script: echo Hello, sakthi!        
-    
-   
+stages:
+- stage: Build
+  jobs:
+  - job: Job1
+    steps:
+    - bash: echo Hello, sakthi!
+    - bash: echo $(PipeLineLevelVariable) 
+    - bash: echo $(Build.BuildNumber)
+    - bash: echo $(Build.BuildId)
+    - bash: echo $(Build.SourceBranchName)
+    - bash: echo $(Build.SourceDirectory)
+    - bash: echo $(System.DefaultWorkingDirectory)
+    - bash: ls -R $(System.DefaultWorkingDirectory)
+    - bash: echo $(Build.ArtifactStagingDirectory)
 
+
+  # - script: |
+  #     echo Add other tasks to build, test, and deploy your project.
+  #     echo See https://aka.ms/yaml
+  #   displayName: 'Run a multi-line script'
+# - job: Job2
+#   dependsOn: Job1
+#   steps:
+#   - script: echo Hello, sakthi!
+# - job: Job3
+#   dependsOn: Job1
+#   steps:
+#   - script: echo Hello, sakthi!
+# - job: Job4
+#   dependsOn: 
+#   - Job2
+#   - Job3 
+#   steps:
+#   - script: echo Hello, sakthi!       
